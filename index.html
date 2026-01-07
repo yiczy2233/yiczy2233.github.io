@@ -5,44 +5,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zoey Cai</title>
     <link rel="icon" type="image/svg+xml" href="./assets/cat1.svg">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
 
     <nav class="navbar">
         <div class="logo">Zoey Cai</div>
+        
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+
         <ul class="nav-links">
-            <li><a href="#home">首页</a></li>
-            <li><a href="#concepts">概念设计</a></li>
-            <li><a href="#games">游戏展示</a></li>
+            <li><a href="#home">首页<br><span>Home</span></a></li>
+            <li><a href="#novel">视觉小说<br><span>Visual Novel</span></a></li>
+            <li><a href="#pixel">像素画<br><span>Pixel Art</span></a></li>
+            <li><a href="#games">游戏开发<br><span>Game Dev</span></a></li>
+            <li><a href="#digital">数字孪生<br><span>Digital Twin</span></a></li>
+            <li><a href="#contact">联系我<br><span>Contact</span></a></li>
         </ul>
     </nav>
 
-    <section id="home" class="section">
+    <section id="home" class="section hero-section">
+        <canvas id="bg-canvas"></canvas>
         <div class="content">
             <h1>Creative Game Maker</h1>
             <p>用代码构建世界，用画笔点亮想象。</p>
         </div>
-        <canvas id="bg-canvas"></canvas>
     </section>
 
-    <section id="concepts" class="section">
-        <h2>Concept Art</h2>
-        <div class="grid">
-            <div class="card">作品 1 (待上传)</div>
-            <div class="card">作品 2 (待上传)</div>
-            <div class="card">作品 3 (待上传)</div>
+    <section id="novel" class="section">
+        <div class="container">
+            <h2>视觉小说 <span>Visual Novel</span></h2>
+            <div class="grid">
+                <div class="card">作品展示 A (待上传)</div>
+                <div class="card">作品展示 B (待上传)</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pixel" class="section alt-bg">
+        <div class="container">
+            <h2>像素画 <span>Pixel Art</span></h2>
+            <div class="grid">
+                <div class="card">像素作品 1</div>
+                <div class="card">像素作品 2</div>
+            </div>
         </div>
     </section>
 
     <section id="games" class="section">
-        <h2>Games</h2>
-        <div class="grid">
-            <div class="card">Unity Game A</div>
-            <div class="card">Unity Game B</div>
+        <div class="container">
+            <h2>游戏开发 <span>Game Dev</span></h2>
+            <div class="grid">
+                <div class="card">Unity 项目</div>
+                <div class="card">UE 项目</div>
+            </div>
         </div>
     </section>
 
-    <script src="script.js"></script>
+    <section id="digital" class="section alt-bg">
+        <div class="container">
+            <h2>数字孪生 <span>Digital Twin</span></h2>
+            <div class="grid">
+                <div class="card">智慧城市案例</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <div class="container">
+            <h2>联系我 <span>Contact</span></h2>
+            <p>如果你有有趣的创意，欢迎随时联系我！</p>
+            <div class="email">Email: czyssg123@gmail.com</div>
+        </div>
+    </section>
+
+    <script src="./js/script.js"></script>
 </body>
 </html>
