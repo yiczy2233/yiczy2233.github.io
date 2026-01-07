@@ -1,3 +1,20 @@
+/* 隐藏页面滚动条 - 适配你的滚动容器 */
+body, #scroll-container {
+  /* 兼容 IE/Edge 旧版 */
+  -ms-overflow-style: none;
+  /* 兼容 Firefox */
+  scrollbar-width: none;
+  /* 确保滚动功能保留 */
+  overflow-x: hidden; /* 隐藏水平滚动条（按需） */
+  overflow-y: auto;
+}
+
+/* 兼容 Chrome/Safari/新版 Edge（WebKit 内核） */
+body::-webkit-scrollbar,
+#scroll-container::-webkit-scrollbar {
+  display: none; /* 完全隐藏滚动条 */
+}
+
 /* 全局设置：禁用 HTML/Body 的默认滚动，交给容器处理 */
 html, body {
     margin: 0;
@@ -25,7 +42,30 @@ html, body {
     box-sizing: border-box;
     transition: 0.3s;
 }
-.logo img { cursor: pointer; }
+/* Logo hover 核心样式 */
+        .logo {
+            transition: all 0.3s ease; /* 顺滑过渡 */
+            padding: 4px; /* 预留hover边框空间 */
+            border-radius: 8px; /* 圆角适配，更柔和 */
+        }
+
+        .logo img {
+            transition: all 0.3s ease;
+            display: block; /* 消除默认间距 */
+        }
+
+        /* hover效果：轻微缩放+小角度旋转+柔和阴影+浅边框 */
+        .logo:hover {
+            transform: scale(1.05); /* 轻微放大 */
+            
+            padding: 3px; /* 抵消边框宽度，保证Logo位置不变 */
+            
+        }
+
+        .logo:hover img {
+            transform: rotate(3deg) scale(1.02); /* 小角度旋转+轻微缩放 */
+            opacity: 0.95; /* 轻微透明，增加层次感 */
+        }
 .nav-links { list-style: none; display: flex; gap: 2rem; margin: 0; }
 .nav-links a { color: white; text-decoration: none; font-size: 15px; transition: 0.3s; display: block; }
 .nav-links a span { font-size: 9px; text-transform: uppercase; opacity: 0.6; letter-spacing: 1px; }
@@ -135,10 +175,6 @@ h2 span { font-size: 1rem; color: #888; margin-left: 10px; }
         display: none !important;
     }
 
-    /* 3. 让导航栏居中显示 Logo (可选) */
-    .navbar {
-        justify-content: center;
-        padding: 0.8rem 5%;
-    }
 }
+
 
