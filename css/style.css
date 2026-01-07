@@ -1,17 +1,16 @@
-/* 全局基础设置 */
-html {
-    scroll-behavior: smooth;
-}
-
-body {
+/* 全局设置：禁用 HTML/Body 的默认滚动，交给容器处理 */
+html, body {
     margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* 关键：禁止外部滚动 */
     font-family: 'Inter', -apple-system, sans-serif;
     background-color: #0a0a0a;
     color: white;
-    overflow-x: hidden;
 }
 
-/* 导航栏样式 */
+/* 导航栏样式 (保持不变) */
 .navbar {
     position: fixed;
     top: 0;
@@ -26,138 +25,107 @@ body {
     box-sizing: border-box;
     transition: 0.3s;
 }
+.logo img { cursor: pointer; }
+.nav-links { list-style: none; display: flex; gap: 2rem; margin: 0; }
+.nav-links a { color: white; text-decoration: none; font-size: 15px; transition: 0.3s; display: block; }
+.nav-links a span { font-size: 9px; text-transform: uppercase; opacity: 0.6; letter-spacing: 1px; }
+.nav-links a:hover { color: #00ffcc; }
 
-.logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    letter-spacing: 2px;
+/* ================== 核心：滚动容器 ================== */
+#scroll-container {
+    width: 100%;
+    height: 100vh; /* 占满全屏 */
+    overflow-y: scroll; /* 允许内部滚动 */
+    
+    /* 开启吸附效果 */
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    
+    /* 解决导航栏遮挡问题 */
+    scroll-padding-top: 70px; 
 }
 
-.nav-links {
-    list-style: none;
-    display: flex;
-    gap: 2rem;
-    margin: 0;
-    text-align: center;
-}
-
-.nav-links a {
-    color: white;
-    text-decoration: none;
-    font-size: 15px;
-    transition: 0.3s;
-    display: block;
-}
-
-.nav-links a span {
-    font-size: 9px;
-    text-transform: uppercase;
-    opacity: 0.6;
-    letter-spacing: 1px;
-}
-
-.nav-links a:hover {
-    color: #00ffcc;
-}
-
-/* 区域设置 */
+/* ================== Section 设置 ================== */
 .section {
-    min-height: 100vh;
-    padding: 100px 5%;
+    min-height: 100vh; /* 确保每一页至少占满屏幕 */
+    padding: 100px 5%; /* 内边距 */
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    scroll-margin-top: 70px; /* 跳转时预留导航栏位置 */
+    position: relative;
+    overflow: hidden;
+    
+    /* 定义吸附点：对齐到顶部 */
+    scroll-snap-align: start;
+    scroll-snap-stop: always; /* 强制停在Section，不许滑到一半 */
 }
 
-.alt-bg {
+/* ================== 视觉过渡动画 ================== */
+/* 默认状态：内容稍微下沉且透明 */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1s ease-out;
+}
+
+/* 激活状态：当JS检测到Section可见时添加此Class */
+.section.active .reveal {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ... (以下特效样式保持不变，例如 .bg-canvas, .floating-char 等) ... */
+.bg-canvas, .bg-effect-container {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;
+}
+.relative-z, .content, .container { position: relative; z-index: 1; }
+
+#home { background: radial-gradient(circle at bottom, #1b2735 0%, #090a0f 100%); }
+
+#novel { background: #0f0f0f; }
+.floating-char {
+    position: absolute; bottom: -50px;
+    color: rgba(255, 255, 255, 0.8); /* 高可见度 */
+    font-family: 'Georgia', serif; pointer-events: none;
+    animation: floatUp linear forwards;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+}
+@keyframes floatUp {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+    10% { opacity: 1; }
+    80% { opacity: 0.8; }
+    100% { transform: translateY(-100vh) rotate(20deg); opacity: 0; }
+}
+
+#pixel {
     background-color: #111;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
 }
 
-.container {
-    width: 100%;
-    max-width: 1200px;
+#games { background: #0d0d0d; }
+.loading-bar-container { position: absolute; height: 4px; background: rgba(255, 255, 255, 0.05); border-radius: 2px; overflow: hidden; }
+.loading-bar-fill { height: 100%; background: #00ffcc; width: 0%; box-shadow: 0 0 10px #00ffcc; animation: loadingFill linear infinite; }
+@keyframes loadingFill {
+    0% { width: 0%; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { width: 100%; opacity: 0; }
 }
 
-h2 {
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
-    border-left: 5px solid #00ffcc;
-    padding-left: 15px;
-}
+#digital { background: #000; }
 
-h2 span {
-    font-size: 1rem;
-    color: #666;
-    margin-left: 10px;
-}
+.container { width: 100%; max-width: 1200px; }
+h2 { font-size: 2.5rem; margin-bottom: 2rem; border-left: 5px solid #00ffcc; padding-left: 15px; text-shadow: 0 0 10px rgba(0,0,0,0.5); }
+h2 span { font-size: 1rem; color: #888; margin-left: 10px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+.card { background: rgba(26, 26, 26, 0.8); backdrop-filter: blur(5px); height: 200px; display: flex; align-items: center; justify-content: center; border-radius: 10px; border: 1px solid #333; transition: 0.3s; }
+.card:hover { transform: translateY(-5px); border-color: #00ffcc; box-shadow: 0 5px 15px rgba(0, 255, 204, 0.2); }
 
-/* 简单的网格展示 */
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-}
-
-.card {
-    background: #1a1a1a;
-    height: 200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 10px;
-    border: 1px solid #333;
-    transition: 0.3s;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    border-color: #00ffcc;
-}
-
-/* 首页 Canvas 装饰 */
-#bg-canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-}
-
-/* 移动端适配 */
-.menu-toggle {
-    display: none;
-    cursor: pointer;
-}
-
-.menu-toggle .bar {
-    width: 25px;
-    height: 3px;
-    background: white;
-    margin: 5px 0;
-    transition: 0.3s;
-}
-
+.menu-toggle { display: none; cursor: pointer; }
+.menu-toggle .bar { width: 25px; height: 3px; background: white; margin: 5px 0; transition: 0.3s; }
 @media screen and (max-width: 768px) {
-    .nav-links {
-        position: fixed;
-        right: -100%;
-        top: 70px;
-        flex-direction: column;
-        background: rgba(10, 10, 10, 0.95);
-        width: 100%;
-        height: 100vh;
-        padding: 2rem;
-        transition: 0.3s;
-    }
-
-    .nav-links.active {
-        right: 0;
-    }
-
-    .menu-toggle {
-        display: block;
-    }
+    .nav-links { position: fixed; right: -100%; top: 70px; flex-direction: column; background: rgba(10, 10, 10, 0.95); width: 100%; height: 100vh; padding: 2rem; transition: 0.3s; }
+    .nav-links.active { right: 0; }
+    .menu-toggle { display: block; }
 }

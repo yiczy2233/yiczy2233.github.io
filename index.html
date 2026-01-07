@@ -1,17 +1,23 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zoey Cai</title>
+    <title>Zoey Cai - Creative Game Maker</title>
     <link rel="icon" type="image/svg+xml" href="./assets/cat1.svg">
     <link rel="stylesheet" href="./css/style.css">
 </head>
+
 <body>
 
     <nav class="navbar">
-        <div class="logo">Zoey Cai</div>
-        
+        <div class="logo">
+            <a href="#home">
+                <img src="./assets/logo.svg" alt="Zoey Cat Logo" style="height: 40px; width: auto;">
+            </a>
+        </div>
+
         <div class="menu-toggle" id="mobile-menu">
             <span class="bar"></span>
             <span class="bar"></span>
@@ -28,60 +34,68 @@
         </ul>
     </nav>
 
-    <section id="home" class="section hero-section">
-        <canvas id="bg-canvas"></canvas>
-        <div class="content">
-            <h1>Creative Game Maker</h1>
-            <p>用代码构建世界，用画笔点亮想象。</p>
-        </div>
-    </section>
-
-    <section id="novel" class="section">
-        <div class="container">
-            <h2>视觉小说 <span>Visual Novel</span></h2>
-            <div class="grid">
-                <div class="card">作品展示 A (待上传)</div>
-                <div class="card">作品展示 B (待上传)</div>
+    <main id="scroll-container">
+        
+        <section id="home" class="section hero-section">
+            <canvas id="canvas-home" class="bg-canvas"></canvas>
+            <div class="content reveal">
+                <h1>Creative Game Maker</h1>
+                <p>用代码构建世界，用画笔点亮想象。</p>
             </div>
-        </div>
-    </section>
-
-    <section id="pixel" class="section alt-bg">
-        <div class="container">
-            <h2>像素画 <span>Pixel Art</span></h2>
-            <div class="grid">
-                <div class="card">像素作品 1</div>
-                <div class="card">像素作品 2</div>
+        </section>
+    
+        <section id="novel" class="section">
+            <div id="bg-novel" class="bg-effect-container"></div>
+            <div class="container relative-z reveal">
+                <h2>视觉小说 <span>Visual Novel</span></h2>
+                <div class="grid">
+                    <div class="card">作品展示 A (待上传)</div>
+                    <div class="card">作品展示 B (待上传)</div>
+                </div>
             </div>
-        </div>
-    </section>
-
-    <section id="games" class="section">
-        <div class="container">
-            <h2>游戏开发 <span>Game Dev</span></h2>
-            <div class="grid">
-                <div class="card">Unity 项目</div>
-                <div class="card">UE 项目</div>
+        </section>
+    
+        <section id="pixel" class="section alt-bg">
+            <canvas id="canvas-pixel" class="bg-canvas"></canvas>
+            <div class="container relative-z reveal">
+                <h2>像素画 <span>Pixel Art</span></h2>
+                <div class="grid">
+                    <div class="card">像素作品 1</div>
+                    <div class="card">像素作品 2</div>
+                </div>
             </div>
-        </div>
-    </section>
-
-    <section id="digital" class="section alt-bg">
-        <div class="container">
-            <h2>数字孪生 <span>Digital Twin</span></h2>
-            <div class="grid">
-                <div class="card">智慧城市案例</div>
+        </section>
+    
+        <section id="games" class="section">
+            <div id="bg-games" class="bg-effect-container"></div>
+            <div class="container relative-z reveal">
+                <h2>游戏开发 <span>Game Dev</span></h2>
+                <div class="grid">
+                    <div class="card">Unity 项目</div>
+                    <div class="card">UE 项目</div>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    
+        <section id="digital" class="section alt-bg">
+            <canvas id="canvas-digital" class="bg-canvas"></canvas>
+            <div class="container relative-z reveal">
+                <h2>数字孪生 <span>Digital Twin</span></h2>
+                <div class="grid">
+                    <div class="card">智慧城市案例</div>
+                </div>
+            </div>
+        </section>
+    
+        <section id="contact" class="section">
+            <div class="container relative-z reveal">
+                <h2>联系我 <span>Contact</span></h2>
+                <p>如果你有有趣的创意，欢迎随时联系我！</p>
+                <div class="email">Email: czyssg123@gmail.com</div>
+            </div>
+        </section>
 
-    <section id="contact" class="section">
-        <div class="container">
-            <h2>联系我 <span>Contact</span></h2>
-            <p>如果你有有趣的创意，欢迎随时联系我！</p>
-            <div class="email">Email: czyssg123@gmail.com</div>
-        </div>
-    </section>
+    </main>
 
     <script src="./js/script.js"></script>
 </body>
