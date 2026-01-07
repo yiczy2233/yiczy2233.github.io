@@ -15,7 +15,7 @@ document.querySelectorAll('.nav-links a').forEach(link => {
     });
 });
 
-// 修改：监听 scrollContainer 而不是 window
+// 监听 scrollContainer 而不是 window
 scrollContainer.addEventListener('scroll', () => {
     const nav = document.querySelector('.navbar');
     // 使用 scrollContainer.scrollTop 来判断滚动距离
@@ -26,7 +26,7 @@ scrollContainer.addEventListener('scroll', () => {
     }
 });
 
-// Favicon 切换逻辑 (保持不变)
+// Favicon 切换逻辑
 const faviconTag = document.querySelector('link[rel="icon"]');
 document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
