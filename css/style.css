@@ -125,8 +125,20 @@ h2 span { font-size: 1rem; color: #888; margin-left: 10px; }
 .menu-toggle { display: none; cursor: pointer; }
 .menu-toggle .bar { width: 25px; height: 3px; background: white; margin: 5px 0; transition: 0.3s; }
 @media screen and (max-width: 768px) {
-    .nav-links { position: fixed; right: -150%; top: 70px; flex-direction: column; background: rgba(10, 10, 10, 0.95); width: 100%; height: 100vh; padding: 2rem; transition: 0.3s; }
-    .nav-links.active { right: 0; }
-    .menu-toggle { display: block; }
+    /* 1. 直接隐藏整个链接列表 */
+    .nav-links {
+        display: none !important;
+    }
+
+    /* 2. 同时隐藏汉堡菜单按钮 */
+    .menu-toggle {
+        display: none !important;
+    }
+
+    /* 3. 让导航栏居中显示 Logo (可选) */
+    .navbar {
+        justify-content: center;
+        padding: 0.8rem 5%;
+    }
 }
 
