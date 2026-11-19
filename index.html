@@ -1,101 +1,321 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zoey Cai - Creative Game Maker</title>
-    <link rel="icon" type="image/svg+xml" href="./assets/cat1.svg">
-    <link rel="stylesheet" href="./css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f0e5">
+  <meta name="description" content="欢迎来到《少女颂歌》的剧场休息室。认识游戏与小歌，看看交流说明、常见问题和反馈方式。">
+  <title>新朋友先看 · 少女颂歌</title>
+  <style>
+    :root{--paper:#fffcf5;--bg:#f4eee3;--ink:#3c3338;--muted:#75696a;--red:#913c51;--red-light:#f7e9e8;--blue:#4c6d84;--blue-light:#eaf0f3;--gold:#957027;--gold-light:#f5eedc;--line:#dcd2c1;--serif:"Noto Serif CJK SC","Songti SC","STSong","SimSun",serif;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei","Noto Sans CJK SC",sans-serif;--shadow:0 9px 28px #4b332514}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:100px}
+    body{margin:0;color:var(--ink);background:var(--bg);font-family:var(--sans);font-size:15px;line-height:1.9;letter-spacing:.02em;background-image:radial-gradient(#8d79521c .65px,transparent .65px);background-size:7px 7px}
+    button,a,summary,textarea{-webkit-tap-highlight-color:transparent}
+    button,textarea{font:inherit}
+    a{color:inherit;text-decoration:none}
+    button{cursor:pointer}
+    button:focus-visible,a:focus-visible,summary:focus-visible,textarea:focus-visible{outline:3px solid var(--blue);outline-offset:5px}
+    ::selection{background:#eed8ae;color:#342831}
+    p,h1,h2,h3,ul{margin:0}
+    svg{display:block;max-width:100%}
+    .shell{width:min(1100px,calc(100% - 80px));margin-inline:auto}
+    .skip{position:fixed;left:20px;top:-100px;background:var(--paper);padding:10px 18px;z-index:20;border:1px solid var(--red)}
+    .skip:focus{top:12px}
+    .topbar{position:sticky;top:0;z-index:10;background:#f9f5edee;backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+    .header-inner{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:78px}
+    .brand{display:flex;align-items:center;gap:12px;flex-shrink:0;line-height:1.3}
+    .brand svg{width:36px;height:36px}
+    .brand strong{display:block;font:700 22px var(--serif);letter-spacing:.12em}
+    .brand small{font-size:10px;letter-spacing:.24em;color:var(--muted);display:block;margin-top:6px}
+    .nav{display:flex;align-items:center;gap:29px;font-size:13px;color:#68575e;white-space:nowrap}
+    .nav a{padding:10px 0;border-bottom:1px solid transparent}
+    .nav a:hover{color:var(--red);border-color:var(--red)}
+    .hero{display:grid;grid-template-columns:1.2fr 1fr;gap:45px;align-items:center;padding-block:65px 55px;position:relative}
+    .kicker{font-size:11px;letter-spacing:.18em;font-weight:700;color:var(--red);display:flex;align-items:center;gap:10px}
+    .kicker:before{content:"";width:24px;height:1px;background:currentColor}
+    .hero h1{font:700 clamp(44px,5.6vw,70px)/1.25 var(--serif);letter-spacing:.04em;margin:20px 0 21px}
+    .hero .lead{font:500 25px/1.8 var(--serif);letter-spacing:.08em}
+    .hero .intro{max-width:445px;color:var(--muted);margin-top:20px;line-height:2}
+    .tags{display:flex;flex-wrap:wrap;gap:8px;margin:23px 0 26px}
+    .tag{font-size:11px;letter-spacing:.06em;border:1px solid var(--line);padding:3px 10px;border-radius:3px;background:#fffcf589;color:#65565c}
+    .tag.status:before{content:"";display:inline-block;width:6px;height:6px;background:var(--red);border-radius:50%;margin-right:6px;vertical-align:2px}
+    .primary{display:inline-flex;align-items:center;gap:21px;padding:11px 18px;background:var(--red);color:var(--paper);border:1px solid var(--red);border-radius:4px;font-size:13px;box-shadow:3px 3px 0 #d9c5bb;transition:transform .2s,box-shadow .2s}
+    .primary:hover{transform:translateY(-2px);box-shadow:3px 5px 0 #d9c5bb}
+    .primary span{font-size:18px;line-height:1}
+    .hero-art{position:relative;padding:8px 21px 36px;max-width:440px;justify-self:end;width:100%}
+    .stage-card{background:var(--paper);padding:15px 15px 31px;border:1px solid var(--line);transform:rotate(2.5deg);box-shadow:var(--shadow);position:relative}
+    .stage-card:before{content:"";position:absolute;width:105px;height:25px;left:calc(50% - 52px);top:-12px;background:#e4c58c96;transform:rotate(-5deg);z-index:1;border-left:3px dotted #f4eee3;border-right:3px dotted #f4eee3}
+    .stage-card figcaption{text-align:center;font:14px var(--serif);margin-top:16px;letter-spacing:.15em;color:var(--red)}
+    figure{margin:0}
+    .ticket{position:absolute;bottom:2px;left:-7px;right:28px;display:flex;align-items:center;justify-content:space-between;gap:20px;background:#e9eef1;box-shadow:0 6px 12px #41363a12;border:1px solid #c9d3d7;transform:rotate(-4deg);padding:13px 20px;color:#425b70}
+    .ticket:before,.ticket:after{content:"";position:absolute;top:calc(50% - 7px);width:14px;height:14px;background:var(--bg);border-radius:50%}
+    .ticket:before{left:-8px;border-right:1px solid #c9d3d7}.ticket:after{right:-8px;border-left:1px solid #c9d3d7}
+    .ticket .ticket-title{font:700 18px var(--serif);letter-spacing:.14em}
+    .ticket small{display:block;font-size:9px;letter-spacing:.2em;margin-top:3px}
+    .ticket .stub{border-left:1px dashed #9cabb4;padding-left:18px;font-size:11px;letter-spacing:.1em;text-align:center;flex-shrink:0}
+    .hero-star{position:absolute;width:40px;height:40px;right:-6px;top:25px;color:var(--gold);transform:rotate(12deg)}
+    .rule-divider{display:flex;gap:15px;align-items:center;color:var(--gold);margin:0 0 45px}
+    .rule-divider:before,.rule-divider:after{content:"";height:1px;background:var(--line);flex:1}
+    .rule-divider span{font-size:15px;line-height:1}
+    section{scroll-margin-top:20px}
+    .section-head{display:flex;align-items:flex-start;gap:18px;margin-bottom:26px}
+    .section-no{color:var(--red);font:italic 27px/1.35 Georgia,serif;flex-shrink:0;min-width:35px;border-bottom:1px solid #cda7a5;padding-bottom:5px}
+    .section-head h2{font:700 27px/1.4 var(--serif);letter-spacing:.07em}
+    .section-head p{font-size:12px;color:var(--muted);margin-top:7px}
+    .about-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:38px}
+    .about-copy{font-size:15px;line-height:2.05;padding:3px 0}
+    .about-copy p+p{margin-top:13px}
+    .about-copy strong{color:var(--red);font-weight:600}
+    .character-note{position:relative;background:var(--paper);border:1px solid var(--line);padding:25px 27px 22px;box-shadow:3px 4px 0 #dfd5c447;transform:rotate(-1deg);align-self:start}
+    .character-note:before{content:"";position:absolute;right:23px;top:-10px;width:15px;height:31px;border:2px solid var(--gold);border-radius:8px;transform:rotate(9deg)}
+    .character-note .note-label{font-size:10px;letter-spacing:.2em;color:var(--red)}
+    .character-note h3{font:700 25px var(--serif);margin:10px 0}
+    .character-note p{font-size:13px;line-height:1.95;color:var(--muted)}
+    .character-note .note-line{font:14px/1.9 var(--serif);color:var(--ink);margin-top:15px;border-top:1px dashed var(--line);padding-top:13px}
+    .motifs{display:grid;grid-template-columns:repeat(3,1fr);gap:17px;margin-top:29px}
+    .motif{display:flex;gap:14px;padding:20px 18px;border-radius:3px;background:var(--red-light);border-top:2px solid #c78591}
+    .motif:nth-child(2){background:var(--blue-light);border-color:#91aebe}.motif:nth-child(3){background:var(--gold-light);border-color:#c6a564}
+    .motif svg{width:32px;height:37px;flex-shrink:0;color:var(--red)}
+    .motif:nth-child(2) svg{color:var(--blue)}.motif:nth-child(3) svg{color:var(--gold)}
+    .motif h3{font-size:14px;font-weight:650;margin-bottom:5px}.motif p{font-size:12px;color:#695f62;line-height:1.85}
+    .room{margin-top:60px}
+    .room-sheet{background:var(--paper);border:1px solid var(--line);padding:34px 36px 0;position:relative;box-shadow:var(--shadow)}
+    .room-sheet:before{content:"休息室守则";position:absolute;right:28px;top:-13px;font-size:11px;color:var(--red);background:#efd7d4;padding:4px 17px;transform:rotate(3deg);letter-spacing:.12em}
+    .room-grid{display:grid;grid-template-columns:1fr 1fr;column-gap:36px;row-gap:27px}
+    .room-item{display:grid;grid-template-columns:32px 1fr;gap:12px}
+    .room-icon{display:block;width:31px;height:31px;color:var(--red);padding-top:3px}.room-item:nth-child(2) .room-icon{color:var(--blue)}.room-item:nth-child(3) .room-icon{color:var(--gold)}
+    .room-item h3{font-size:15px;font-weight:650;margin:0 0 6px}.room-item p{font-size:13px;color:var(--muted);line-height:1.95}
+    .kindness{margin-top:28px;padding:21px 0 23px;border-top:1px dashed var(--line);display:grid;grid-template-columns:168px 1fr;gap:15px;align-items:start}
+    .kindness strong{font:600 15px/1.9 var(--serif);color:var(--red)}
+    .kindness p{font-size:12px;color:var(--muted);line-height:1.9}
+    .faq{margin-top:60px;display:grid;grid-template-columns:270px 1fr;gap:36px}
+    .faq .section-head{margin-bottom:20px}
+    .faq-note{margin-left:53px;color:var(--muted);font-size:13px;line-height:1.9;max-width:182px}
+    .faq-note .little-star{display:block;font:30px Georgia,serif;color:#ad8a47;margin-top:25px}
+    .faq-list{border-top:1px solid var(--line)}
+    details{border-bottom:1px solid var(--line)}
+    summary{list-style:none;cursor:pointer;display:flex;gap:16px;align-items:center;justify-content:space-between;padding:18px 2px;font-size:14px;font-weight:600}
+    summary::-webkit-details-marker{display:none}
+    summary:after{content:"+";font:23px/1 Georgia,serif;color:var(--red);width:22px;text-align:center;flex-shrink:0}
+    details[open] summary:after{content:"−"}
+    details[open] summary{color:var(--red)}
+    details p{font-size:13px;line-height:2;color:var(--muted);padding:0 28px 19px 2px}
+    details p a{border-bottom:1px solid #a8b9c4;color:var(--blue)}
+    .feedback{margin-top:62px}
+    .feedback-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+    .feedback-card{background:var(--paper);border:1px solid var(--line);padding:25px 26px 22px;position:relative}
+    .feedback-card h3{font:600 19px var(--serif);margin-bottom:9px}
+    .feedback-card .desc{font-size:12px;color:var(--muted);line-height:1.9;min-height:46px}
+    .feedback-card .label{position:absolute;right:23px;top:23px;font:italic 18px Georgia,serif;color:#b18c71}
+    .template{display:block;resize:vertical;width:100%;margin:19px 0 15px;border:1px dashed #cfc4b3;background:#f8f4eb;padding:14px 15px;color:#66595e;font-family:var(--sans);font-size:12px;line-height:2;min-height:192px;border-radius:3px;white-space:pre-wrap}
+    .copy-button{border:1px solid var(--line);padding:7px 14px;background:var(--paper);color:var(--red);border-radius:3px;font-size:12px;display:inline-flex;gap:8px;align-items:center;transition:background .2s}
+    .copy-button:hover{background:var(--red-light);border-color:#cda7a5}.copy-button svg{width:14px;height:14px}
+    .feedback-note{margin-top:17px;font-size:12px;color:var(--muted);text-align:center}
+    .closing{text-align:center;padding:58px 15px 34px}
+    .closing .flourish{color:var(--gold);letter-spacing:1em;font-size:12px;margin-bottom:16px;padding-left:1em}
+    .closing h2{font:500 27px/1.7 var(--serif);letter-spacing:.1em}
+    .closing p{font-size:12px;color:var(--muted);margin-top:14px}
+    .footer{border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:20px;padding:21px 0 25px;font-size:11px;color:var(--muted)}
+    .footer .footer-brand{font:600 16px var(--serif);color:var(--red);display:block;margin-bottom:6px;letter-spacing:.1em}
+    .footer-actions{display:flex;align-items:center;gap:22px}
+    .print-button{background:none;border:0;border-bottom:1px solid var(--line);padding:2px 0;color:var(--muted);font-size:11px}
+    .footer a:hover,.print-button:hover{color:var(--red)}
+    .js-only{display:none}.js .js-only{display:inline-flex}
+    .toast{position:fixed;bottom:28px;left:50%;transform:translate(-50%,18px);max-width:calc(100% - 36px);width:max-content;padding:11px 21px;border-radius:5px;background:#44333b;color:#fff9ee;font-size:13px;box-shadow:0 5px 20px #35222d26;z-index:30;opacity:0;visibility:hidden;transition:opacity .2s,transform .2s;pointer-events:none;text-align:center}
+    .toast.show{opacity:1;visibility:visible;transform:translate(-50%,0)}
+    @media(min-width:1500px){.hero{padding-block:80px 65px}}
+    @media(max-width:950px){.shell{width:calc(100% - 48px)}.hero{gap:20px}.hero h1{font-size:52px}.hero .lead{font-size:22px}.hero-art{padding-inline:13px}.about-grid{gap:25px}.motif{padding:18px 13px;gap:10px}.motif svg{width:25px}.faq{grid-template-columns:225px 1fr;gap:26px}.nav{gap:19px}.room-sheet{padding-inline:25px}}
+    @media(max-width:720px){html{scroll-padding-top:128px}.shell{width:calc(100% - 36px)}.header-inner{min-height:99px;display:block;padding-block:13px 8px}.brand{gap:9px}.brand svg{width:27px;height:27px}.brand strong{font-size:18px}.brand small{display:none}.nav{justify-content:space-between;font-size:12px;gap:12px;margin-top:7px}.nav a{padding:5px 0}.hero{grid-template-columns:1fr;gap:32px;padding-block:37px 41px}.hero h1{font-size:clamp(40px,9.6vw,61px);margin-block:17px}.hero .lead{font-size:23px}.hero .intro{font-size:14px;max-width:100%;margin-top:16px}.hero-art{justify-self:center;width:min(360px,100%);padding:4px 16px 34px}.stage-card{padding:12px 12px 25px}.stage-card figcaption{font-size:12px;margin-top:13px}.ticket{left:4px;right:11px;padding:10px 17px}.ticket .ticket-title{font-size:16px}.hero-star{right:1px;top:9px;width:30px;height:30px}.rule-divider{margin-bottom:33px}.section-head{gap:12px;margin-bottom:21px}.section-no{font-size:24px;min-width:31px}.section-head h2{font-size:23px;letter-spacing:.04em}.section-head p{font-size:11px}.about-grid{grid-template-columns:1fr;gap:24px}.about-copy{font-size:14px;line-height:2}.character-note{padding:23px 24px}.character-note h3{font-size:23px}.motifs{grid-template-columns:1fr;gap:10px;margin-top:24px}.motif{padding:16px 18px;gap:15px;border-top:0;border-left:2px solid #c78591}.motif svg{width:31px;height:36px}.motif:nth-child(2){border-color:#91aebe}.motif:nth-child(3){border-color:#c6a564}.motif p{font-size:12px}.room{margin-top:43px}.room-sheet{padding:29px 20px 0}.room-sheet:before{right:16px;font-size:10px;padding:3px 12px}.room-grid{grid-template-columns:1fr;gap:25px}.room-item{grid-template-columns:27px 1fr;gap:12px}.room-icon{width:26px}.room-item p{font-size:13px}.kindness{grid-template-columns:1fr;gap:7px;padding-block:19px 22px;margin-top:24px}.kindness strong{font-size:15px}.faq{margin-top:44px;grid-template-columns:1fr;gap:23px}.faq .section-head{margin-bottom:12px}.faq-note{max-width:none;margin-left:43px;font-size:12px}.faq-note .little-star{display:none}.faq-list{margin-left:0}summary{font-size:13px;padding:18px 1px;line-height:1.8}details p{font-size:12px}.feedback{margin-top:44px}.feedback-grid{grid-template-columns:1fr;gap:18px}.feedback-card{padding:22px 21px 19px}.feedback-card .desc{min-height:0}.template{margin-top:16px;font-size:12px;min-height:184px}.feedback-note{text-align:left;font-size:11px}.closing{padding:42px 5px 28px}.closing h2{font-size:22px;letter-spacing:.04em}.closing p{font-size:11px}.footer{align-items:flex-start;font-size:10px;padding:21px 0;gap:14px}.footer .footer-brand{font-size:15px}.footer-actions{gap:12px;flex-wrap:wrap;justify-content:flex-end}.print-button{font-size:10px}.toast{bottom:18px;font-size:12px}.tags{margin-block:19px 23px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
+    @media print{@page{size:A4;margin:15mm}html{scroll-behavior:auto}body{font-size:11px;background:white;color:#222;-webkit-print-color-adjust:exact;print-color-adjust:exact}.shell{width:100%;max-width:none}.topbar{position:static;background:white;backdrop-filter:none}.header-inner{min-height:50px}.nav,.skip,.primary,.footer-actions,.toast,.copy-button{display:none!important}.hero{grid-template-columns:1.2fr 1fr;gap:25px;padding-block:28px}.hero h1{font-size:41px}.hero .lead{font-size:19px}.hero .intro{font-size:12px}.hero-art{max-width:290px}.stage-card{box-shadow:none}.rule-divider{margin-bottom:25px}.section-head{margin-bottom:17px}.section-head h2{font-size:21px}.section-no{font-size:22px}.about-copy{font-size:11px}.character-note{box-shadow:none}.character-note p{font-size:11px}.motifs{margin-top:20px}.motif{padding:13px;gap:10px}.motif h3{font-size:12px}.motif p{font-size:10px}.room{margin-top:30px}.room-sheet{padding:25px 25px 0;box-shadow:none}.room-item h3{font-size:12px}.room-item p,.kindness p{font-size:10px}.kindness{grid-template-columns:145px 1fr}.kindness strong{font-size:13px}.faq{display:block;margin-top:30px}.faq-note{margin:0 0 15px 53px;max-width:none;font-size:11px}.faq-note .little-star{display:none}.faq-list summary{padding:12px 0;font-size:12px}.faq-list details p{font-size:10px;padding-bottom:12px}.feedback{margin-top:30px}.feedback-card{padding:19px}.feedback-card h3{font-size:16px}.feedback-card .desc{font-size:10px;min-height:40px}.template{font-size:10px;line-height:1.9;min-height:185px;height:185px;resize:none;padding:10px;margin-bottom:0;color:#333}.feedback-note{font-size:10px}.closing{padding-block:30px 24px}.closing h2{font-size:20px}.closing p{font-size:10px}.footer{font-size:9px}.character-note,.motif,.room-item,.feedback-card,details,.closing{break-inside:avoid}.section-head{break-after:avoid}section{scroll-margin-top:0}.hero,.about-grid{break-inside:avoid}}
+  </style>
 </head>
+<body id="top">
+  <a href="#main" class="skip">跳到正文</a>
+  <header class="topbar">
+    <div class="shell header-inner">
+      <a class="brand" href="#top" aria-label="少女颂歌，新朋友先看，返回顶部">
+        <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M22 21C13 10 5 12 5 15v18c0 4 10 1 17-8M26 21c9-11 17-9 17-6v18c0 4-10 1-17-8" fill="#913c51" stroke="#713047" stroke-width="1.6"/><path d="m18 27-5 16 8-4 4 4 3-17" fill="#ad5162" stroke="#713047" stroke-width="1.3"/><rect x="19" y="18" width="10" height="12" rx="3" fill="#c9797d" stroke="#713047" stroke-width="1.6"/></svg>
+        <span><strong>少女颂歌</strong><small>剧场休息室 · 入场手册</small></span>
+      </a>
+      <nav class="nav" aria-label="页内目录"><a href="#about">关于游戏</a><a href="#room">在这里</a><a href="#faq">常见问题</a><a href="#feedback">留下反馈</a></nav>
+    </div>
+  </header>
+  <main id="main" class="shell">
+    <div class="hero">
+      <div>
+        <div class="kicker">WELCOME TO THE THEATRE</div>
+        <h1>新朋友先看</h1>
+        <p class="lead">世界尽头的剧场，<br>给你留了一个座位。</p>
+        <p class="intro">你来啦，先找个喜欢的位置坐下吧。<br>这里是《少女颂歌》的玩家交流群，欢迎一起看着这座剧场，慢慢长成游戏里的模样。</p>
+        <div class="tags"><span class="tag">2D 横版动作</span><span class="tag status">独立开发中</span><span class="tag">聊天与围观都欢迎</span></div>
+        <a class="primary" href="#about">先认识一下这座剧场 <span aria-hidden="true">↓</span></a>
+      </div>
+      <div class="hero-art">
+        <figure class="stage-card">
+          <svg viewBox="0 0 340 302" role="img" aria-labelledby="stage-title stage-desc">
+            <title id="stage-title">为新朋友留座的小剧场</title><desc id="stage-desc">红色帷幕、星星与一把空着的椅子，椅子上放着一本红色的书。</desc>
+            <defs><pattern id="stage-floor" width="42" height="15" patternUnits="userSpaceOnUse"><path d="M0 14.5h42M21 0v15" fill="none" stroke="#cdb58f" stroke-width=".8"/></pattern></defs>
+            <rect width="340" height="302" rx="2" fill="#e9e0ce"/>
+            <path d="M31 264V109a139 94 0 0 1 278 0v155Z" fill="#a78d65"/>
+            <path d="M39 264V110a131 87 0 0 1 262 0v154Z" fill="#d7c09a"/>
+            <path d="M46 264V112a124 80 0 0 1 248 0v152Z" fill="#d5dfe3"/>
+            <path d="M59 259V118a111 68 0 0 1 222 0v141" fill="none" stroke="#b1c1ca" stroke-width="1"/>
+            <path d="M48 40Q97 62 170 41Q247 63 292 40V79Q260 104 229 84Q194 107 170 84Q139 106 108 84Q74 104 48 79Z" fill="#a14b5b" stroke="#78394c" stroke-width="2"/>
+            <path d="M49 76Q75 95 108 80Q139 99 170 80Q197 99 229 80Q258 97 292 75" fill="none" stroke="#d7b16b" stroke-width="2"/>
+            <path d="M47 47Q77 85 87 144Q91 172 63 189Q76 219 76 264H46Z" fill="#913c51" stroke="#78394c" stroke-width="2"/>
+            <path d="M293 47Q263 85 253 144Q249 172 277 189Q264 219 264 264H294Z" fill="#913c51" stroke="#78394c" stroke-width="2"/>
+            <path d="M58 72q28 67 12 100M61 201q3 30 2 54M282 72q-28 67-12 100M279 201q-3 30-2 54" fill="none" stroke="#bb6f78" stroke-width="3"/>
+            <path d="m48 183 26-7 3 8-26 8m214-8 26 8 3-9-26-7" fill="#d7b16b" stroke="#a58248" stroke-width="1"/>
+            <path d="m71 187 9 20m-4-23 11 15m182-12-9 20m4-23-11 15" stroke="#d7b16b" stroke-width="2"/>
+            <path d="M46 264h248l21 25H25Z" fill="#e0caab"/>
+            <path d="M46 264h248l21 25H25Z" fill="url(#stage-floor)"/>
+            <path d="M24 289h292v5H24Z" fill="#b89c74"/>
+            <path d="M162 102v12m-6-6h12m41 23v9m-4.5-4.5h9m-96-12v8m-4-4h8m110 61v8m-4-4h8" stroke="#a78d58" stroke-width="1.5"/>
+            <path d="m183 146 3-8 3 8 8 3-8 3-3 8-3-8-8-3Z" fill="#fff9e6" stroke="#bfa36a" stroke-width="1"/>
+            <circle cx="132" cy="163" r="2" fill="#9baebd"/><circle cx="217" cy="102" r="2" fill="#bba46f"/><circle cx="103" cy="203" r="1.7" fill="#bba46f"/>
+            <ellipse cx="171" cy="268" rx="45" ry="7" fill="#a68a6829"/>
+            <path d="m144 237-6 33m58-33 6 33" stroke="#947345" stroke-width="5" stroke-linecap="round"/>
+            <path d="M142 235v-34q0-26 29-26t29 26v34" fill="#bc7480" stroke="#856143" stroke-width="4"/>
+            <path d="M149 232v-30q0-19 22-19t22 19v30Z" fill="#a75366" stroke="#dab67a" stroke-width="1.3"/>
+            <path d="M171 189v34m-17-24 17 10 17-10" stroke="#c47f89" fill="none" stroke-width="1.5"/><circle cx="171" cy="209" r="2" fill="#e8c78c"/>
+            <rect x="135" y="230" width="72" height="14" rx="6" fill="#b86c7a" stroke="#856143" stroke-width="3"/>
+            <path d="M134 239v-18m73 18v-18" stroke="#947345" stroke-width="4" stroke-linecap="round"/>
+            <path d="M130 219h10m62 0h10" stroke="#bf9c61" stroke-width="5" stroke-linecap="round"/>
+            <path d="m161 224 24-3 4 10-24 3Z" fill="#fff4dc" stroke="#7e3749" stroke-width="2"/>
+            <path d="m160 221 25-3 2 5-25 4Z" fill="#8e3e52" stroke="#7e3749" stroke-width="1.2"/>
+            <path d="m174 220 2 6-1 9 4-3 3 2-4-9-1-5Z" fill="#cfb16c"/>
+            <path d="M97 245v18m-8 0h16M97 245v-30q0-8 8-8" fill="none" stroke="#937a53" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="m99 207 6-11h7l6 11Z" fill="#f7e7b9" stroke="#af925e" stroke-width="1.5"/><path d="M107 210v4" stroke="#b29255" stroke-width="1.5"/>
+          </svg>
+          <figcaption>帷幕之下，总有你的位置。</figcaption>
+        </figure>
+        <div class="ticket" aria-hidden="true"><div><div class="ticket-title">新朋友入场券</div><small>ONE SEAT, JUST FOR YOU</small></div><div class="stub">观众席<br>欢迎落座</div></div>
+        <svg class="hero-star" viewBox="0 0 40 40" aria-hidden="true"><path d="m20 2 4 13 14 5-14 5-4 13-4-13L2 20l14-5Z" fill="#f5e9c9" stroke="currentColor" stroke-width="1.5"/></svg>
+      </div>
+    </div>
+    <div class="rule-divider" aria-hidden="true"><span>✦</span></div>
 
-<body>
-
-    <nav class="navbar">
-        <div class="logo">
-            <img src="./assets/logo.svg" alt="Zoey Cat Logo" style="height: 32px; width: auto;">
+    <section id="about" aria-labelledby="about-title">
+      <div class="section-head"><span class="section-no" aria-hidden="true">01</span><div><h2 id="about-title">先认识一下，这座剧场</h2><p>关于游戏，也关于即将走上舞台的她。</p></div></div>
+      <div class="about-grid">
+        <div class="about-copy">
+          <p>《少女颂歌》是一款正在独立开发中的 <strong>2D 横版动作游戏</strong>，将角色战斗、探索和舞台演出结合起来。</p>
+          <p>故事发生在世界尽头的一座剧场。当一段传奇迎来终章，故事中的人便跨越最后一道帷幕，来到这里。曾经发生的一切成为往事，舞台却仍然存在。</p>
+          <p>目前由开发者一人推进制作，从程序、美术到动画与演出，一点点把想法放进游戏里。你在群里看到的，也会是这段仍在继续的创作过程。</p>
         </div>
+        <aside class="character-note" aria-label="关于主角小歌">
+          <div class="note-label">MEET THE GIRL · 认识小歌</div><h3>她的名字，叫小歌。</h3>
+          <p>银白色长发、红色蝴蝶结、蓝色眼眸，还有颈间的金色铃铛——这位安静的少女，将陪你走进剧场。</p>
+          <p class="note-line">她不属于任何一个故事。<br>曾是旁观者与歌唱者，如今决定走上舞台。</p>
+        </aside>
+      </div>
+      <div class="motifs">
+        <article class="motif"><svg viewBox="0 0 40 44" aria-hidden="true"><circle cx="10" cy="32" r="6" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="30" cy="32" r="6" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m14 27 16-22-7 17M26 27 10 5l7 17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="20" cy="22" r="2" fill="currentColor"/></svg><div><h3>三色能力</h3><p>围绕红、蓝、黄三色，设计战斗与探索中的不同选择。</p></div></article>
+        <article class="motif"><svg viewBox="0 0 40 44" aria-hidden="true"><path d="M5 35V14Q20-2 35 14v21M4 36h32M9 35V16q11-12 22 0v19" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m20 18 2 5 5 2-5 2-2 5-2-5-5-2 5-2Z" fill="none" stroke="currentColor" stroke-width="1.3"/></svg><div><h3>舞台与故事</h3><p>走近传奇谢幕之后的世界，看看故事会怎样继续。</p></div></article>
+        <article class="motif"><svg viewBox="0 0 40 44" aria-hidden="true"><path d="M20 12Q10 6 4 10v25q7-3 16 2 9-5 16-2V10q-6-4-16 2Zm0 0v25" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 17q4-1 7 1m-7 5q4-1 7 1m9-7 7-1v12m-7-11v13" fill="none" stroke="currentColor" stroke-width="1.5"/><ellipse cx="23" cy="30" rx="3" ry="2" fill="currentColor"/><ellipse cx="30" cy="28" rx="3" ry="2" fill="currentColor"/></svg><div><h3>手帐与乐谱</h3><p>贴纸、书页与音符，也是这座剧场正在生长的一部分。</p></div></article>
+      </div>
+    </section>
 
-        <div class="menu-toggle" id="mobile-menu">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
+    <section class="room" id="room" aria-labelledby="room-title">
+      <div class="section-head"><span class="section-no" aria-hidden="true">02</span><div><h2 id="room-title">在这里，自在一点就好</h2><p>聊游戏，聊灵感，也一起看看幕后。</p></div></div>
+      <div class="room-sheet">
+        <div class="room-grid">
+          <article class="room-item"><svg class="room-icon" viewBox="0 0 32 32" aria-hidden="true"><path d="M5 10h22v17H5ZM5 10l-1-5 22-3 1 5Z" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="m10 4 4 4m5-5 4 4m-9 8 7 4-7 4Z" fill="none" stroke="currentColor" stroke-width="1.5"/></svg><div><h3>看舞台一点点搭起来</h3><p>新动作、新怪物、新场景，还有制作途中冒出来的小想法。开发记录和幕后花絮，都会是这里的话题。</p></div></article>
+          <article class="room-item"><svg class="room-icon" viewBox="0 0 32 32" aria-hidden="true"><path d="M27 14a11 10 0 0 1-16 9l-7 4 2-8a10 10 0 0 1-1-5 11 10 0 0 1 22 0Z" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 12h12M10 17h8" stroke="currentColor" stroke-width="1.5"/></svg><div><h3>聊你的真实感受</h3><p>喜欢的角色、看不清的提示、期待的战斗节奏，都可以聊。告诉我你的感受和原因，会很有帮助。</p></div></article>
+          <article class="room-item"><svg class="room-icon" viewBox="0 0 32 32" aria-hidden="true"><path d="m7 20 16-16 5 5-16 16-8 3Z" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="m20 7 5 5M7 20l5 5M4 28l4-1-3-3Z" fill="none" stroke="currentColor" stroke-width="1.5"/></svg><div><h3>带来一点自己的创作</h3><p>同人图、手作、表情或音乐灵感，都欢迎分享。分享他人的作品时，请保留作者与来源。</p></div></article>
+          <article class="room-item"><svg class="room-icon" viewBox="0 0 32 32" aria-hidden="true"><path d="M5 12h17v10a6 6 0 0 1-6 6h-5a6 6 0 0 1-6-6Zm17 1h3a4 4 0 0 1 0 8h-3M9 3v5m6-6v6m6-5v5M3 29h22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><div><h3>安静坐一会儿，也很好</h3><p>不需要打卡、统一改名或经常发言。聊天和潜水都欢迎，按自己的节奏，等下一次帷幕拉开。</p></div></article>
         </div>
+        <div class="kindness"><strong>给彼此留一点耐心。</strong><p>欢迎不同意见，请围绕作品与设计交流。不刷屏发广告，不人身攻击或骚扰其他成员；讨论关键剧情前，先提醒一句“以下含剧透”。开发期间回复可能不及时，谢谢你的理解。</p></div>
+      </div>
+    </section>
 
-        <ul class="nav-links">
-            <li><a href="#home">首页<br><span>Intro</span></a></li>
-            <li><a href="#novel">创意<br><span>Visual</span></a></li>
-            <li><a href="#pixel">像素画<br><span>Pixel Art</span></a></li>
-            <li><a href="#games">游戏开发<br><span>Game Dev</span></a></li>
-            <li><a href="#digital">数字孪生<br><span>Digital Twin</span></a></li>
-            <li><a href="#contact">联系我<br><span>Contact</span></a></li>
-        </ul>
-    </nav>
+    <section class="faq" id="faq" aria-labelledby="faq-title">
+      <div><div class="section-head"><span class="section-no" aria-hidden="true">03</span><div><h2 id="faq-title">你也许想问</h2><p>先把常见的小疑问放在这里。</p></div></div><p class="faq-note">试玩与版本相关的信息，<br>请以群公告和开发者正式说明为准。<span class="little-star" aria-hidden="true">✧</span></p></div>
+      <div class="faq-list">
+        <details open><summary>现在可以试玩了吗？在哪里下载？</summary><p>请查看群公告中的试玩安排。开放试玩时，会说明获取方式、适用平台和版本号，请通过公告中确认的入口获取。</p></details>
+        <details><summary>什么时候发售？会支持哪些平台？</summary><p>发售时间、支持平台与价格，以开发者后续正式公布的信息为准。确定的安排会在群内说明，欢迎一起关注后续进展。</p></details>
+        <details><summary>群里看到的画面，就是最终效果吗？</summary><p>游戏仍在开发，角色动作、界面、关卡与玩法会继续调整。你看到的一次尝试或一条反馈，都可能成为下一版变化的起点。</p></details>
+        <details><summary>可以提建议吗？建议一定会加入游戏吗？</summary><p>当然欢迎提建议。说清楚“在哪里看到的、有什么感受、为什么想调整”，会更容易理解。具体是否加入，会结合游戏整体方向、实际体验和开发进度考虑。</p></details>
+        <details><summary>如果试玩时遇到问题，该怎么反馈？</summary><p>尽量带上游戏版本、设备或系统、问题出现前的操作，以及实际发生的情况。有截图或录屏就更好。下面准备了<a href="#feedback">可以直接复制的反馈模板</a>，不清楚的项目可以留空。</p></details>
+        <details><summary>去哪里看最新进度？可以聊制作过程吗？</summary><p>可以先看群公告和开发者在群内发布的记录。也欢迎聊动画、美术和游戏制作思路，有空时会一起讨论。相关主页或下载入口，以群内正式公布的信息为准。</p></details>
+      </div>
+    </section>
 
-    <main id="scroll-container">
+    <section class="feedback" id="feedback" aria-labelledby="feedback-title">
+      <div class="section-head"><span class="section-no" aria-hidden="true">04</span><div><h2 id="feedback-title">把你的想法，留在这里</h2><p>选一份合适的模板，填好后发到群里就可以。</p></div></div>
+      <div class="feedback-grid">
+        <article class="feedback-card"><span class="label" aria-hidden="true">A.</span><h3>一点想法与建议</h3><p class="desc">关于角色、画面、音乐或玩法，告诉我你看到了什么，以及你的感受。</p><textarea class="template" id="suggestion-template" aria-label="建议反馈模板，可选择并复制" rows="7" readonly spellcheck="false">【建议与感受】
+想反馈的内容：
+在哪个画面、视频或环节看到的：
+我的感受与原因：
+希望怎样调整：
+截图或参考图（可选）：</textarea><button type="button" class="copy-button js-only" data-copy="suggestion-template"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="5" y="5" width="8" height="9" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M10 3V2H2v9h1" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>复制建议模板</button></article>
+        <article class="feedback-card"><span class="label" aria-hidden="true">B.</span><h3>一起捉一只小 Bug</h3><p class="desc">试玩时遇到问题，可以记下这些信息。说不清也没关系，先描述你看到了什么。</p><textarea class="template" id="bug-template" aria-label="游戏问题反馈模板，可选择并复制" rows="7" readonly spellcheck="false">【游戏问题 / Bug】
+游戏版本、设备与系统：
+发生问题的位置与操作步骤：
+原本预期发生什么：
+实际发生什么，是否可重复：
+截图或录屏（可选）：</textarea><button type="button" class="copy-button js-only" data-copy="bug-template"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="5" y="5" width="8" height="9" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M10 3V2H2v9h1" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>复制问题模板</button></article>
+      </div>
+      <p class="feedback-note">不清楚的项目可以留空。复制或选中模板后，粘贴到群聊中填写即可。</p>
+    </section>
 
-        <section id="home" class="section hero-section">
-            <canvas id="canvas-home" class="bg-canvas"></canvas>
-            <div class="content reveal">
-                <h1>Creative Concept Maker</h1>
-                <p>用代码构建世界，用画笔点亮想象。</p>
-            </div>
-        </section>
-
-        <section id="novel" class="section">
-            <div id="bg-novel" class="bg-effect-container"></div>
-            <div class="container relative-z reveal">
-                <h2>创意 <span> idea </span></h2>
-                <div class="grid">
-                    <div class="card">作品展示 A (待上传)</div>
-                    <div class="card">作品展示 B (待上传)</div>
-                </div>
-            </div>
-        </section>
-
-        <section id="pixel" class="section alt-bg">
-            <canvas id="canvas-pixel" class="bg-canvas"></canvas>
-            <div class="container relative-z reveal">
-                <h2>像素画 <span>Pixel Art</span></h2>
-                <div class="grid">
-                    <div class="card">像素作品 1</div>
-                    <div class="card">像素作品 2</div>
-                </div>
-            </div>
-        </section>
-
-        <section id="games" class="section">
-            <div id="bg-games" class="bg-effect-container"></div>
-            <div class="container relative-z reveal">
-                <h2>游戏开发 <span>Game Dev</span></h2>
-                <div class="grid">
-                    <div class="card">Unity 项目</div>
-                    <div class="card">UE 项目</div>
-                </div>
-            </div>
-        </section>
-
-        <section id="digital" class="section alt-bg">
-            <canvas id="canvas-digital" class="bg-canvas"></canvas>
-            <div class="container relative-z reveal">
-                <h2>数字孪生 <span>Digital Twin</span></h2>
-                <div class="grid">
-                    <div class="card">智慧城市案例</div>
-                </div>
-            </div>
-        </section>
-
-        <section id="contact" class="section">
-            <div class="container relative-z reveal">
-                <h2>联系我 <span>Contact</span></h2>
-                <p>如果你有有趣的创意，欢迎随时联系我！</p>
-                <div class="email">Email: czyssg123@gmail.com</div>
-            </div>
-        </section>
-
-    </main>
-
-    <script src="./js/script.js"></script>
+    <div class="closing"><div class="flourish" aria-hidden="true">✦ · ✧ · ✦</div><h2>帷幕还在准备，<br>你的位置已经留好了。</h2><p>欢迎来到《少女颂歌》。很高兴，这段旅程有你一起看。</p></div>
+    <footer class="footer"><div><span class="footer-brand">少女颂歌</span>新朋友先看 · 更新于 2026.11.19</div><div class="footer-actions"><button type="button" id="print-page" class="print-button js-only">打印 / 存为 PDF</button><a href="#top">回到页首 ↑</a></div></footer>
+  </main>
+  <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+  <script>
+    'use strict';
+    document.documentElement.classList.add('js');
+    (function () {
+      var toast = document.getElementById('toast');
+      var toastTimer;
+      function announce(message) {
+        clearTimeout(toastTimer);
+        toast.textContent = message;
+        toast.classList.add('show');
+        toastTimer = setTimeout(function () { toast.classList.remove('show'); }, 3400);
+      }
+      function fallbackCopy(field) {
+        var previousFocus = document.activeElement;
+        var scrollX = window.scrollX;
+        var scrollY = window.scrollY;
+        field.focus({preventScroll:true});
+        field.select();
+        field.setSelectionRange(0, field.value.length);
+        var copied = false;
+        try { copied = document.execCommand('copy'); } catch (error) { copied = false; }
+        if (copied && previousFocus) previousFocus.focus({preventScroll:true});
+        window.scrollTo({left:scrollX,top:scrollY,behavior:'instant'});
+        return copied;
+      }
+      var buttons = document.querySelectorAll('[data-copy]');
+      buttons.forEach(function (button) {
+        button.addEventListener('click', async function () {
+          var field = document.getElementById(button.getAttribute('data-copy'));
+          var copied = false;
+          if (navigator.clipboard && window.isSecureContext) {
+            try { await navigator.clipboard.writeText(field.value); copied = true; } catch (error) { copied = false; }
+          }
+          if (!copied) copied = fallbackCopy(field);
+          announce(copied ? '已复制，可以粘贴到群里填写。' : '请选中模板文字，使用系统的复制功能。');
+        });
+      });
+      var originalDetailStates = [];
+      window.addEventListener('beforeprint', function () {
+        var details = document.querySelectorAll('details');
+        originalDetailStates = Array.from(details, function (item) { return item.open; });
+        details.forEach(function (item) { item.open = true; });
+      });
+      window.addEventListener('afterprint', function () {
+        if (!originalDetailStates.length) return;
+        document.querySelectorAll('details').forEach(function (item, index) { item.open = originalDetailStates[index]; });
+        originalDetailStates = [];
+      });
+      document.getElementById('print-page').addEventListener('click', function () { window.print(); });
+    }());
+  </script>
 </body>
-
 </html>
